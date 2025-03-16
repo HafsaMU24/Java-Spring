@@ -13,7 +13,7 @@ public class ChannelDetail {
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "channel_id")
+    @JoinColumn(name = "channel_id", nullable = false)
     private Channel channel;
 
     public ChannelDetail(){}

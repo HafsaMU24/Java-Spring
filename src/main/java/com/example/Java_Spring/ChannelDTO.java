@@ -1,15 +1,37 @@
 package com.example.Java_Spring;
 
-import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 
 public class ChannelDTO {
-    @NotBlank(message = "Channel name is required")
+
+    private Long id;
+
     private String name;
+
+    private ChannelDetail channelDetail;
+
+    private List<Long> messagesId;
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName(){
         return name;
     }
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public ChannelDetail getChannelDetail() {
+        return channelDetail;
+    }
+
+    public void setChannelDetail(ChannelDetail channelDetail) {
+        this.channelDetail = channelDetail;
     }
 }

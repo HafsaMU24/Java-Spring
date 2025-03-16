@@ -1,16 +1,18 @@
 package com.example.Java_Spring;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Component
-public class ChannelMapper {
-    public ChannelDTO toDTO(Channel channel){
+@Mapper(componentModel = "spring")
+public interface ChannelMapper {
 
-        ChannelDTO dto = new ChannelDTO();
-        dto.setName(channel.getName());
-        return dto;
+    ChannelMapper INSTANCE = Mappers.getMapper(ChannelMapper.class);
+
+   // Konverterar Channel till channelDTO, ignorerar ChannelDetail om det inte behövs
+@Mapping(target = "channelDetail", ignore = true)
+    ChannelDTO toDTO(Channel channel);
+  // Konverterar ChannelDTO till Channel
+    Channel toEntity(ChannelDTO dto);
     }
-    public  Channel toEntity(ChannelDTO dto){
-        return new Channel(dto.getName());
-    }
-}
+

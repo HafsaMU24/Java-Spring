@@ -2,7 +2,8 @@ package com.example.Java_Spring;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Channel {
@@ -13,11 +14,21 @@ public class Channel {
     @NotBlank(message = "Channel name is required")
     private String name;
 
-    @OneToMany(mappedBy = "channel",cascade = CascadeType.ALL)
-    private List<ChannelDetail> message;
+    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ChannelDetail> messages = new HashSet<>();
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "channel_tags",
+            joinColumns = @JoinColumn(name = "channel_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+
+    private Set<Tag> tags = new HashSet<>();
 
        public Channel(){}
-           public Channel(String name){
+
+       public Channel(String name){
                this.name = name;
            }
         public Long getId(){
@@ -32,11 +43,19 @@ public class Channel {
            public void setName(String name){
                this.name = name;
            }
-           public List<ChannelDetail> getMessages(){
+           public Set<ChannelDetail> getMessages(){
                return messages;
            }
-           public void setMessages(List<ChannelDetail> messages){
-               this.messages = messages;
+           public void setMessages(Set<ChannelDetail>messags) {
+           this.messages = messags;
+           }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags){
+               this.tags = tags;
            }
     }
 
